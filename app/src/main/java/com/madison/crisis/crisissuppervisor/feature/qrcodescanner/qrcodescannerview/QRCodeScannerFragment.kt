@@ -2,7 +2,6 @@ package com.madison.crisis.crisissuppervisor.feature.qrcodescanner.qrcodescanner
 
 import android.Manifest
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -78,14 +77,13 @@ class QRCodeScannerFragment : BaseFragment() {
             it.formats = CodeScanner.TWO_DIMENSIONAL_FORMATS // list of type BarcodeFormat,
 
             it.autoFocusMode = AutoFocusMode.SAFE // or CONTINUOUS
-            it.scanMode = ScanMode.CONTINUOUS // or CONTINUOUS or PREVIEW
+            it.scanMode = ScanMode.SINGLE // or CONTINUOUS or PREVIEW
             it.isAutoFocusEnabled = true // Whether to enable auto focus or not
             it.isFlashEnabled = false // Whether to enable flash or not
 
             it.decodeCallback = DecodeCallback { result ->
                 requireActivity().runOnUiThread {
                     if (loadingView?.isVisible() == false) {
-                        Log.e("Gianhtran", result)
                         qRCodeScannerViewViewModel.checkIn(result)
                     }
                 }

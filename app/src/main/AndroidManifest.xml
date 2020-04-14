@@ -26,9 +26,7 @@
 
         <activity android:name=".feature.home.HomeActivity"/>
 
-        <activity
-            android:name=".feature.checkinresult.CheckInResultActivity"
-            android:launchMode="singleInstance"/>
+        <activity android:name=".feature.checkinresult.CheckInResultActivity"/>
 
         <activity android:name=".feature.qrcodescanner.QRCodeScannerActivity"/>
     </application>
