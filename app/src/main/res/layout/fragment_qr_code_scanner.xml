@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.madison.crisis.crisissuppervisor.extention.customview.scancode.CodeScannerView
+        android:id="@+id/scannerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:autoFocusButtonVisible="false"
+        app:flashButtonVisible="false"
+        app:frameCornersSize="@dimen/dp_50"
+        app:frameSize="0.9"
+        app:frameThickness="@dimen/dp_10"/>
+
+    <ProgressBar
+        android:id="@+id/loadingView"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/scannerView"
+        app:layout_constraintEnd_toEndOf="@id/scannerView"
+        app:layout_constraintStart_toStartOf="@id/scannerView"
+        app:layout_constraintTop_toTopOf="@id/scannerView"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

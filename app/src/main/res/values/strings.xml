@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Crisis Supervisor</string>
+
+    <string name="no_internet_connection_available">No Internet connection available</string>
+
+    <string name="cancel">Cancel</string>
+    <string name="permission_request_message">App need this permissions</string>
+    <string name="dialog_permission_title">Grant Permissions</string>
+    <string name="dialog_permission_message">This app needs permission to use this feature. You can grant them in app
+        settings.
+    </string>
+    <string name="go_to_settings">Go to setting</string>
+
+    <string name="camera_access_required">Camera Access Required</string>
+    <string name="camera_access_msg"> Unable to scan QR code without access to camera. Would you like to open and update Settings now?</string>
+
+    <!-- sign in -->
+    <string name="worker_check_in">Worker check-in</string>
+    <string name="login">Login</string>
+    <string name="user_name">Username</string>
+    <string name="password">Password</string>
+
+    <!-- scan worker -->
+    <string name="scan_worker">Scan worker</string>
+    <string name="scan_again">Scan again</string>
+    <string name="check_in_success">Check-in successful</string>
+    <string name="name">Name</string>
+    <string name="id_password_number">ID/Passport number</string>
+    <string name="covid_19_test">COVID-19 test</string>
+    <string name="site">site</string>
+    <string name="check_in_failed">Check-in failed</string>
+    <string name="please_contact_administrator">please contact administrator</string>
+    <string name="align_qr_code">Align QR Code on the frame to scan</string>
+    <string name="logout">Logout</string>
+</resources>
