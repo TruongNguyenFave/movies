@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.madison.gamuda.supervisor.extention.customview.scancode.CodeScannerView
+    <com.madison.client.appname.extention.customview.scancode.CodeScannerView
         android:id="@+id/scannerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
