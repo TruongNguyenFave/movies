@@ -13,7 +13,7 @@
         android:scaleType="centerInside"
         android:src="@drawable/ic_scan"/>
 
-    <com.madison.crisis.crisissuppervisor.extention.customview.button.PrimaryButton
+    <com.madison.gamuda.supervisor.extention.customview.button.PrimaryButton
         android:id="@+id/btnScan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
         android:layout_marginEnd="@dimen/dp_58"
         app:pb_text="@string/scan_worker"/>
 
-    <com.madison.crisis.crisissuppervisor.extention.customview.button.PrimaryButton
+    <com.madison.gamuda.supervisor.extention.customview.button.PrimaryButton
         android:id="@+id/btnLogout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

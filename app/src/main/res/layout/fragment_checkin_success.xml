@@ -151,7 +151,7 @@
         </LinearLayout>
     </ScrollView>
 
-    <com.madison.crisis.crisissuppervisor.extention.customview.button.PrimaryButton
+    <com.madison.gamuda.supervisor.extention.customview.button.PrimaryButton
         android:id="@+id/btnScanAgain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -33,7 +33,7 @@
                 android:textColor="@color/doveGray"
                 android:textSize="@dimen/sp_25"/>
 
-            <com.madison.crisis.crisissuppervisor.extention.customview.inputview.SecondaryInputView
+            <com.madison.gamuda.supervisor.extention.customview.inputview.SecondaryInputView
                 android:id="@+id/edtUserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
                 app:siv_inputType="text"
                 app:siv_style="primary"/>
 
-            <com.madison.crisis.crisissuppervisor.extention.customview.inputview.SecondaryInputView
+            <com.madison.gamuda.supervisor.extention.customview.inputview.SecondaryInputView
                 android:id="@+id/edtPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
                 app:siv_inputType="password"
                 app:siv_style="primary"/>
 
-            <com.madison.crisis.crisissuppervisor.extention.customview.button.PrimaryButton
+            <com.madison.gamuda.supervisor.extention.customview.button.PrimaryButton
                 android:id="@+id/btnSignIn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

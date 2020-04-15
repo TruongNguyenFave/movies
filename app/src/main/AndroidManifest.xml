@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.madison.crisis.crisissuppervisor">
+    package="com.madison.gamuda.supervisor">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -8,14 +8,14 @@
     <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
-        android:name=".GamudarSupervisorApp"
+        android:name="com.madison.gamuda.supervisor.GamudarSupervisorApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".feature.auth.AuthActivity">
+        <activity android:name="com.madison.gamuda.supervisor.feature.auth.AuthActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <action android:name="android.intent.action.VIEW"/>
@@ -24,10 +24,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".feature.home.HomeActivity"/>
+        <activity android:name="com.madison.gamuda.supervisor.feature.home.HomeActivity"/>
 
-        <activity android:name=".feature.checkinresult.CheckInResultActivity"/>
+        <activity android:name="com.madison.gamuda.supervisor.feature.checkinresult.CheckInResultActivity"/>
 
-        <activity android:name=".feature.qrcodescanner.QRCodeScannerActivity"/>
+        <activity android:name="com.madison.gamuda.supervisor.feature.qrcodescanner.QRCodeScannerActivity"/>
     </application>
 </manifest>
