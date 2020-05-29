@@ -34,9 +34,9 @@ android {
     applicationVariants.all { variant ->
         def BASE_URL
         if (variant.getName().contains("develop") || variant.getName().contains("mock")) {
-            BASE_URL = "https://gamudaland-dev.dev-box.tech"
+            BASE_URL = "https://develop.endpoint.com"
         } else
-            BASE_URL = "https://gamudaland-dev.dev-box.tech"
+            BASE_URL = "https://production.endpoint.com"
         variant.buildConfigField "String", "BASE_URL", "\"${BASE_URL}\""
     }
 

@@ -3,8 +3,6 @@ package com.madison.client.appname.di
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.madison.client.appname.feature.auth.signin.SignInViewModel
-import com.madison.client.appname.feature.home.scanworker.ScanWorkerViewModel
-import com.madison.client.appname.feature.qrcodescanner.qrcodescannerview.QRCodeScannerViewViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -18,14 +16,4 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SignInViewModel::class)
     internal abstract fun bindSignUpViewModel(signUpViewModel: SignInViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(QRCodeScannerViewViewModel::class)
-    internal abstract fun bindQRCodeScannerViewViewModel(qRCodeScannerViewViewModel: QRCodeScannerViewViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(ScanWorkerViewModel::class)
-    internal abstract fun bindScanWorkerViewModel(scanWorkerViewModel: ScanWorkerViewModel): ViewModel
 }

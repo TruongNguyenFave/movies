@@ -25,9 +25,5 @@
         </activity>
 
         <activity android:name="com.madison.client.appname.feature.home.HomeActivity"/>
-
-        <activity android:name="com.madison.client.appname.feature.checkinresult.CheckInResultActivity"/>
-
-        <activity android:name="com.madison.client.appname.feature.qrcodescanner.QRCodeScannerActivity"/>
     </application>
 </manifest>
