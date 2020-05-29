@@ -108,11 +108,6 @@ dependencies {
     // android svg
     implementation "com.caverock:androidsvg:$android_svg_version"
 
-    // zxing scanner
-    implementation "com.journeyapps:zxing-android-embedded:$zxing_android_embedeed_version"
-    implementation "com.google.zxing:core:$zxing_core_version"
-
     // Support cookies
     implementation "com.squareup.okhttp3:okhttp-urlconnection:$http_url_connection_version"
-
 }
