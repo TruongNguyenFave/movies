@@ -51,7 +51,7 @@ class PrimaryButton @JvmOverloads constructor(
     private var leftDrawable: Drawable? = null
         set(value) {
             value?.let {
-                btn.setCompoundDrawablesWithIntrinsicBounds(leftDrawable, null, null, null)
+                btn.setCompoundDrawablesWithIntrinsicBounds(value, null, null, null)
             }
             field = value
         }

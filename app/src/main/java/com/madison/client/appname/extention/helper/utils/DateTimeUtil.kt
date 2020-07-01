@@ -35,71 +35,6 @@ private const val HISTORY_DAY_FORMAT = "dd MMM yyyy, hh:mma"
 private const val CARD_EXPIRED_SERVER_FORMAT = "MM/yyyy"
 private const val CARD_EXPIRED_UI_FORMAT = "MMMM yyyy"
 
-fun getEventTime(startDay: String, endDay: String): String {
-    if (isSameYear(startDay, endDay)) {
-        return formatDateFromDateStringWithLocaleDefault(
-            EVENT_TIME_SERVER_FORMAT,
-            EVENT_TIME_FORMAT_SIMPLIFY,
-            startDay
-        ) + " - " + formatDateFromDateStringWithLocaleDefault(
-            EVENT_TIME_SERVER_FORMAT,
-            EVENT_TIME_FORMAT,
-            endDay
-        )
-    }
-    return formatDateFromDateStringWithLocaleDefault(
-        EVENT_TIME_SERVER_FORMAT,
-        EVENT_TIME_FORMAT,
-        startDay
-    ) + " - " + formatDateFromDateStringWithLocaleDefault(
-        EVENT_TIME_SERVER_FORMAT,
-        EVENT_TIME_FORMAT,
-        endDay
-    )
-}
-
-
-fun getOrderDayInUIFormat(orderDay: String): String {
-    return formatDateFromDateStringWithLocaleDefault(
-        EVENT_TIME_SERVER_FORMAT,
-        ORDER_DAY_FORMAT,
-        orderDay
-    )
-}
-
-fun getCardExpiredInUIFormat(cardExpired: String): String {
-    return formatDateFromDateStringWithLocaleDefault(
-        CARD_EXPIRED_SERVER_FORMAT,
-        CARD_EXPIRED_UI_FORMAT,
-        cardExpired
-    )
-}
-
-fun getHistoryTimeInUIFormat(timeString: String, locale: Locale): String {
-    return formatDateFromDateStringFromUTC(
-        EVENT_TIME_SERVER_FORMAT,
-        HISTORY_DAY_FORMAT,
-        timeString
-        , locale
-    ).replace("AM", "am").replace("PM", "pm")
-}
-
-fun isSameYear(startDay: String, endDay: String): Boolean {
-    return try {
-        formatDateFromDateStringWithLocaleDefault(
-            EVENT_TIME_SERVER_FORMAT,
-            YEAR_FORMAT,
-            startDay
-        ) == formatDateFromDateStringWithLocaleDefault(
-            EVENT_TIME_SERVER_FORMAT,
-            YEAR_FORMAT,
-            endDay
-        )
-    } catch (e: ParseException) {
-        false
-    }
-}
-
 fun isSameYear(startDay: Long, endDay: Long): Boolean {
     val cal1 = Calendar.getInstance()
     val cal2 = Calendar.getInstance()
@@ -124,62 +59,35 @@ fun isSameMonth(startDay: Long, endDay: Long): Boolean {
  * @return
  * @throws ParseException
  */
-@Throws(ParseException::class)
-fun formatDateFromDateStringWithLocaleDefault(
+fun formatDateFromDateString(
     inputDateFormat: String,
     outputDateFormat: String,
-    inputDate: String
-): String {
-    val parsedDate: Date?
-    val outputDateString: String
-    val mInputDateFormat = SimpleDateFormat(inputDateFormat, Locale.getDefault())
-    val mOutputDateFormat = SimpleDateFormat(outputDateFormat, Locale.getDefault())
-    parsedDate = mInputDateFormat.parse(inputDate)
-    parsedDate?.let {
-        outputDateString = mOutputDateFormat.format(parsedDate)
-        return outputDateString
-    }
-    return ""
-}
-
-fun formatDateFromDateStringWithLocale(
-    inputDateFormat: String,
-    outputDateFormat: String,
-    inputDate: String, locale: Locale
-): String {
-    val parsedDate: Date?
-    val outputDateString: String
-    val mInputDateFormat = SimpleDateFormat(inputDateFormat, locale)
-    val mOutputDateFormat = SimpleDateFormat(outputDateFormat, locale)
-    parsedDate = mInputDateFormat.parse(inputDate)
-    parsedDate?.let {
-        outputDateString = mOutputDateFormat.format(parsedDate)
-        return outputDateString
-    }
-    return ""
-}
-
-@Throws(ParseException::class)
-fun formatDateFromDateStringFromUTC(
-    inputDateFormat: String,
-    outputDateFormat: String,
-    inputDate: String, locale: Locale
-): String {
-    val mParsedDate: Date?
-    val mOutputDateString: String
-    val mInputDateFormat = SimpleDateFormat(inputDateFormat, locale)
-    mInputDateFormat.timeZone = TimeZone.getTimeZone("UTC")
-    val mOutputDateFormat = SimpleDateFormat(outputDateFormat, locale)
-    mOutputDateFormat.timeZone = TimeZone.getDefault()
-    if (inputDate.isNotEmpty()) {
-        mParsedDate = mInputDateFormat.parse(inputDate)
-        mParsedDate?.let {
-            mOutputDateString = mOutputDateFormat.format(mParsedDate)
-            return mOutputDateString
+    inputDate: String,
+    locale: Locale = Locale.getDefault(),
+    inputTimeZone: TimeZone? = null,
+    outputTimeZone: TimeZone? = null
+): String? {
+    try {
+        val mInputDateFormat = SimpleDateFormat(inputDateFormat, locale)
+        inputTimeZone?.let {
+            mInputDateFormat.timeZone = inputTimeZone
         }
+
+        val mOutputDateFormat = SimpleDateFormat(outputDateFormat, locale)
+        outputTimeZone?.let {
+            mOutputDateFormat.timeZone = outputTimeZone
+        }
+
+        mInputDateFormat.parse(inputDate)?.let {
+            return mOutputDateFormat.format(it)
+        }
+    } catch (ex: ParseException) {
+        return null
     }
-    return ""
+
+    return null
 }
+
 
 fun convertStringToDateTime(dateString: String, format: String, timeZone: TimeZone? = null): Date? {
     val sdf = SimpleDateFormat(format, Locale.getDefault())
@@ -194,19 +102,26 @@ fun convertStringToDateTime(dateString: String, format: String, timeZone: TimeZo
     }
 }
 
-fun dateToString(date: Date, format: String, timeZone: TimeZone? = null): String {
-    val sdf = SimpleDateFormat(format, Locale.getDefault())
+fun convertDateToString(
+    date: Date, format: String, timeZone: TimeZone? = null, locale: Locale = Locale.getDefault()
+): String? {
+    val sdf = SimpleDateFormat(format, locale)
     timeZone?.let {
         sdf.timeZone = timeZone
     }
-    return sdf.format(date)
+
+    return try {
+        sdf.format(date)
+    } catch (ex: ParseException) {
+        null
+    }
 }
 
-fun getDate(
+fun getDateFromLong(
     milliSeconds: Long,
-    dateFormat: String, locale: Locale,
+    dateFormat: String,
+    locale: Locale = Locale.getDefault(),
     timeZone: TimeZone? = null
-
 ): String {
     val formatter = SimpleDateFormat(dateFormat, locale)
 
@@ -238,23 +153,6 @@ private fun getFieldInMillis(field: Int): Long {
     return after - now
 }
 
-fun getBirthDate(timeString: String): String {
-    return formatDateFromDateStringFromUTC(
-        EVENT_TIME_SERVER_FORMAT,
-        EVENT_TIME_FORMAT_SIMPLIFY,
-        timeString,
-        Locale.getDefault()
-    )
-}
-
-fun getTimeActivity(timeString: String): String {
-    return formatDateFromDateStringFromUTC(
-        EVENT_TIME_SERVER_FORMAT,
-        MESSAGE_GROUP_FORMAT,
-        timeString,
-        Locale.getDefault()
-    )
-}
 
 fun getDateFromPicker(
     day: Int,
@@ -262,7 +160,7 @@ fun getDateFromPicker(
     year: Int,
     format: String,
     timeZone: TimeZone? = null,
-    locale: Locale
+    locale: Locale = Locale.getDefault()
 ): String {
 
     val calendar = Calendar.getInstance()

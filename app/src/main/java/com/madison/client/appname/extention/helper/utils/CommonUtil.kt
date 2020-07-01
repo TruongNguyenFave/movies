@@ -42,10 +42,6 @@ const val THUMBNAIL_SIZE = 640
 
 const val DEVICE_TYPE = "android"
 
-// todo update URLs later
-const val DYNAMIC_LINK_DOMAIN = "upliftapp.page.link"
-const val DYNAMIC_LINK_URL = "https://uplift.com/"
-
 fun convertDpToPx(context: Context, dp: Float): Int {
     val r = context.resources
 
