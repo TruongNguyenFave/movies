@@ -1,7 +1,6 @@
 package com.madison.client.appname.di
 
 import android.content.Context
-import androidx.room.Room
 import com.madison.client.appname.data.repository.MoviesRepository
 import com.madison.client.appname.data.repository.local.api.*
 import com.madison.client.appname.data.repository.remote.MoviesRemoteDataSource
