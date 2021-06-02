@@ -8,7 +8,7 @@ import javax.inject.Inject
 class MoviesRemoteDataSource @Inject constructor(
     private val moviesApi: MoviesApi
 ) : BaseRemoteDataSource() {
-    fun getMovies(): Single<MovieResponse> {
-        return moviesApi.getMovies()
+    fun getMovies(page: Int): Single<MovieResponse> {
+        return moviesApi.getMovies(page)
     }
 }

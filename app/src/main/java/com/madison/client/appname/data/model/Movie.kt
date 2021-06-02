@@ -48,4 +48,12 @@ data class Movie(
 
     @SerializedName("release_date")
     @Expose val releaseDate: String?
-) : Parcelable
+) : Parcelable {
+    fun getFullPosterPath(): String? {
+        if (!posterPath.isNullOrEmpty()) {
+            return "https://image.tmdb.org/t/p/w342$posterPath"
+        } else {
+            return posterPath
+        }
+    }
+}

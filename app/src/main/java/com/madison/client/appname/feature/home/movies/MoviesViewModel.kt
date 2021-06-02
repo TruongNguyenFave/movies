@@ -14,8 +14,8 @@ class MoviesViewModel @Inject constructor(private var moviesRepository: MoviesRe
     var getMoviesSuccessObservable = MutableLiveData<MovieResponse>()
     var getMoviesErrorObservable = MutableLiveData<RetrofitException>()
 
-    fun getMovies() {
-        compositeDisposable.add(moviesRepository.getMovies()
+    fun getMovies(page: Int) {
+        compositeDisposable.add(moviesRepository.getMovies(page)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.ui())
             .doOnSubscribe {
