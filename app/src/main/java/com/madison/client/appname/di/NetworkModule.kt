@@ -3,7 +3,7 @@ package com.madison.client.appname.di
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.madison.client.appname.data.repository.remote.api.AuthApi
+import com.madison.client.appname.data.repository.remote.api.MoviesApi
 import com.madison.client.appname.data.repository.remote.api.middleware.AuthInterceptor
 import com.madison.client.appname.data.repository.remote.api.service.ServiceGenerator
 import com.madison.client.movies.BuildConfig
@@ -36,10 +36,10 @@ class NetworkModule {
             authInterceptor: AuthInterceptor,
             loggingInterceptor: HttpLoggingInterceptor,
             context: Context
-    ): AuthApi {
+    ): MoviesApi {
         val interceptors = arrayOf(authInterceptor, loggingInterceptor)
         return ServiceGenerator.generate(
-                BuildConfig.BASE_URL, AuthApi::class.java, gson, null, interceptors, context
+                BuildConfig.BASE_URL, MoviesApi::class.java, gson, null, interceptors, context
         )
     }
 

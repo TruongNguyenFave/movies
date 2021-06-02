@@ -39,7 +39,7 @@ android {
     }
 
     applicationVariants.all { variant ->
-        def BASE_URL = "http://api.themoviedb.org/3/"
+        def BASE_URL = "https://api.themoviedb.org/3/"
         variant.buildConfigField "String", "BASE_URL", "\"${BASE_URL}\""
     }
 
