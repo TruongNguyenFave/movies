@@ -3,13 +3,10 @@ package com.madison.client.appname.di
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.madison.client.appname.BuildConfig
-import com.madison.client.appname.data.repository.local.api.AccessTokenWrapper
 import com.madison.client.appname.data.repository.remote.api.AuthApi
-import com.madison.client.appname.data.repository.remote.api.NoneAuthApi
 import com.madison.client.appname.data.repository.remote.api.middleware.AuthInterceptor
-import com.madison.client.appname.data.repository.remote.api.middleware.NoneAuthInterceptor
 import com.madison.client.appname.data.repository.remote.api.service.ServiceGenerator
+import com.madison.client.movies.BuildConfig
 import dagger.Module
 import dagger.Provides
 import okhttp3.logging.HttpLoggingInterceptor
@@ -34,42 +31,21 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideNoneAuthApi(
-        gson: Gson,
-        noneAuthInterceptor: NoneAuthInterceptor,
-        loggingInterceptor: HttpLoggingInterceptor,
-        context: Context
-    ): NoneAuthApi {
-        val interceptors = arrayOf(noneAuthInterceptor, loggingInterceptor)
-        return ServiceGenerator.generate(
-            BuildConfig.BASE_URL, NoneAuthApi::class.java, gson, null, interceptors, context
-        )
-    }
-
-    @Singleton
-    @Provides
     fun provideAuthApi(
-        gson: Gson,
-        authInterceptor: AuthInterceptor,
-        loggingInterceptor: HttpLoggingInterceptor,
-        context: Context
+            gson: Gson,
+            authInterceptor: AuthInterceptor,
+            loggingInterceptor: HttpLoggingInterceptor,
+            context: Context
     ): AuthApi {
         val interceptors = arrayOf(authInterceptor, loggingInterceptor)
         return ServiceGenerator.generate(
-            BuildConfig.BASE_URL, AuthApi::class.java, gson, null, interceptors, context
+                BuildConfig.BASE_URL, AuthApi::class.java, gson, null, interceptors, context
         )
     }
 
     @Singleton
     @Provides
-    fun provideNoneAuthInterceptor(
-    ): NoneAuthInterceptor {
-        return NoneAuthInterceptor()
-    }
-
-    @Singleton
-    @Provides
-    fun provideAuthInterceptor(accessTokenWrapper: AccessTokenWrapper): AuthInterceptor {
-        return AuthInterceptor(accessTokenWrapper)
+    fun provideAuthInterceptor(): AuthInterceptor {
+        return AuthInterceptor()
     }
 }

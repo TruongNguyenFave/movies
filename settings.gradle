@@ -1,2 +1,2 @@
-rootProject.name='Crisis Suppervisor'
+rootProject.name = 'Movies'
 include ':app'

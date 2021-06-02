@@ -1,7 +1,7 @@
 package com.madison.client.appname.feature.home
 
 import android.os.Bundle
-import com.madison.client.appname.R
+import com.madison.client.movies.R
 import com.madison.client.appname.feature.base.BaseActivity
 
 class HomeActivity : BaseActivity() {

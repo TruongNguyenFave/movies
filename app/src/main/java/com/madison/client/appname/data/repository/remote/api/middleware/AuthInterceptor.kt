@@ -1,13 +1,9 @@
 package com.madison.client.appname.data.repository.remote.api.middleware
 
-import com.madison.client.appname.data.repository.local.api.AccessTokenWrapper
 import okhttp3.Interceptor
 import okhttp3.Response
-import javax.inject.Inject
 
-class AuthInterceptor @Inject constructor(
-    private val accessTokenWrapper: AccessTokenWrapper
-) : ApiInterceptor() {
+class AuthInterceptor : ApiInterceptor() {
 
     companion object {
         private const val BEARER = "Bearer"

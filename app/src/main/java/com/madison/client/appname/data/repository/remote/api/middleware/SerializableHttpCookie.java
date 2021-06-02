@@ -11,10 +11,6 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.net.HttpCookie;
 
-/**
- * Created by GianhTran on 13/06/2019.
- * Email: gianhtns.bk@gmail.com
- */
 class SerializableHttpCookie implements Serializable {
     private static final String TAG = SerializableHttpCookie.class
             .getSimpleName();

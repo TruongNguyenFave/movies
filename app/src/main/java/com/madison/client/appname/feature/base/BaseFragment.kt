@@ -5,11 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
-import com.madison.client.appname.R
-import com.madison.client.appname.data.repository.remote.api.error.RetrofitException
-import com.madison.client.appname.data.repository.remote.api.error.UNAUTHORIZED_CODE
 import com.madison.client.appname.extention.helper.navigation.Navigator
-import com.madison.client.appname.feature.auth.AuthActivity
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -23,15 +19,15 @@ abstract class BaseFragment : DaggerFragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         val callback = object : OnBackPressedCallback(
-            true // default to enabled
+                true // default to enabled
         ) {
             override fun handleOnBackPressed() {
                 onBackPressedCallback()
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(
-            this, // LifecycleOwner
-            callback
+                this, // LifecycleOwner
+                callback
         )
     }
 
@@ -44,31 +40,6 @@ abstract class BaseFragment : DaggerFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         observeLiveData()
-    }
-
-    open fun handleShowServerError(error: RetrofitException) {
-        if (error.isNetworkError()) {
-            navigator.showErrorSnackbar(
-                requireActivity(), getString(R.string.no_internet_connection_available)
-            )
-        } else {
-            if (error.getErrorCode() == UNAUTHORIZED_CODE) {
-                val bundle = Bundle()
-                bundle.putBoolean(AuthActivity.KEY_AUTH_EXTRAS, true)
-
-                navigator.startActivityAtRoot(
-                    requireActivity(), AuthActivity::class.java, bundle
-                )
-
-                return
-            }
-            navigator.showErrorSnackbar(requireActivity(), error.getErrorMessage() ?: "")
-        }
-    }
-
-    fun showMessageNotImplementYet() {
-        // only using for testing mode
-        navigator.showErrorSnackbar(requireActivity(), "This function not available")
     }
 
     open fun initView() {}
