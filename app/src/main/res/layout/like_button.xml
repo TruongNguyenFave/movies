@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/dp_4"
     android:layout_marginRight="@dimen/dp_4"
-    android:background="@color/button_like_bg_color"
+    android:background="@color/boston_blue"
     android:gravity="center"
     android:orientation="horizontal"
     android:padding="@dimen/dp_6">
@@ -21,17 +21,16 @@
         android:id="@+id/tv_like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="14dp"
+        android:paddingStart="@dimen/dp_10"
         android:text="@string/unlike"
         android:textColor="@android:color/white"
-        android:textSize="16dp" />
+        android:textSize="@dimen/sp_16" />
 
     <TextView
         android:id="@+id/tv_number_of_like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="(12)"
         android:textColor="@android:color/white"
-        android:textSize="16dp"
+        android:textSize="@dimen/sp_16"
         android:visibility="gone" />
 </LinearLayout>

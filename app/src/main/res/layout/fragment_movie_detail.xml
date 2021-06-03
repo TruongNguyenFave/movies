@@ -1,98 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <data>
+
+        <variable
+            name="movie"
+            type="com.madison.client.movies.data.model.Movie" />
+    </data>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/dp_16"
-        android:paddingBottom="@dimen/dp_16"
-        tools:context=".details.MovieDetailFragment">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/dp_16"
-            android:paddingRight="@dimen/dp_16">
-
-            <ImageView
-                android:id="@+id/imvMoviePoster"
-                android:layout_width="@dimen/dp_140"
-                android:layout_height="@dimen/dp_210"
-                android:layout_marginRight="@dimen/dp_16"
-                android:layout_marginBottom="@dimen/dp_16"
-                android:scaleType="fitXY" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvMovieTitle"
-                    style="?android:attr/textAppearanceMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_4"
-                    android:layout_marginBottom="@dimen/dp_4"
-                    android:textColor="@color/movie_overview_text_color"
-                    android:textIsSelectable="true"
-                    android:textStyle="bold" />
-
-                <include layout="@layout/rating" />
-
-                <Button
-                    android:id="@+id/btnWatchTrailer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_16"
-                    android:enabled="false"
-                    android:text="@string/book_movie"
-                    android:theme="@style/Button.ColorPrimary" />
-
-                <include layout="@layout/like_button" />
-            </LinearLayout>
-        </LinearLayout>
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/dp_16"
-            android:paddingRight="@dimen/dp_16">
-
-            <TextView
-                android:id="@+id/tvMovieUserRating"
-                style="?android:attr/textAppearanceMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/movie_overview_text_color"
-                android:textIsSelectable="true" />
-
-            <TextView
-                android:id="@+id/tvMovieReleaseDate"
-                style="?android:attr/textAppearanceMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/movie_overview_text_color"
-                android:textIsSelectable="true" />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvMovieOverview"
-            style="?android:attr/textAppearanceMedium"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="@dimen/dp_16"
             android:paddingTop="@dimen/dp_16"
-            android:paddingRight="@dimen/dp_16"
-            android:textColor="@color/movie_overview_text_color"
-            android:textIsSelectable="true" />
-    </LinearLayout>
-</ScrollView>
+            android:paddingBottom="@dimen/dp_16"
+            tools:context=".details.MovieDetailFragment">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_16">
+
+                <ImageView
+                    android:id="@+id/imvMoviePoster"
+                    android:layout_width="@dimen/dp_140"
+                    android:layout_height="@dimen/dp_210"
+                    android:layout_marginRight="@dimen/dp_16"
+                    android:layout_marginBottom="@dimen/dp_16"
+                    android:scaleType="fitXY"
+                    app:movieImage="@{movie.posterPath}" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvMovieTitle"
+                        style="?android:attr/textAppearanceMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_4"
+                        android:layout_marginBottom="@dimen/dp_4"
+                        android:text="@{movie.originalTitle}"
+                        android:textColor="@color/movie_overview_text_color"
+                        android:textIsSelectable="true"
+                        android:textStyle="bold" />
+
+                    <include layout="@layout/rating" />
+
+                    <Button
+                        android:id="@+id/btnWatchTrailer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_16"
+                        android:enabled="false"
+                        android:text="@string/book_movie"
+                        android:theme="@style/Button.ColorPrimary" />
+
+                    <include layout="@layout/like_button" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_16">
+
+                <TextView
+                    android:id="@+id/tvMovieUserRating"
+                    style="?android:attr/textAppearanceMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/movie_overview_text_color"
+                    android:textIsSelectable="true" />
+
+                <TextView
+                    android:id="@+id/tvMovieReleaseDate"
+                    style="?android:attr/textAppearanceMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/movie_overview_text_color"
+                    android:textIsSelectable="true" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvMovieOverview"
+                style="?android:attr/textAppearanceMedium"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingTop="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_16"
+                android:text="@{movie.overview}"
+                android:textColor="@color/movie_overview_text_color"
+                android:textIsSelectable="true" />
+        </LinearLayout>
+    </ScrollView>
+</layout>

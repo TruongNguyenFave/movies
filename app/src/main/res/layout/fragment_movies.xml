@@ -15,7 +15,7 @@
         android:layout_height="match_parent">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_refresh_layout"
+            android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -41,7 +41,7 @@
                     android:layout_gravity="center"
                     android:visibility="visible"
                     app:pageNumber="@{viewModel.pageNumber}"
-                    app:paginationLoading="@{viewModel.loading}" />
+                    app:paginationLoading="@{viewModel.isLoading}" />
             </LinearLayout>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            app:firstPageloading="@{viewModel.loading}"
+            app:firstPageloading="@{viewModel.isLoading}"
             app:pageNumber="@{viewModel.pageNumber}" />
     </RelativeLayout>
 </layout>

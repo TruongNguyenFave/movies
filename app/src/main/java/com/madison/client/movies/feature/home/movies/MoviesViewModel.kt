@@ -11,14 +11,18 @@ import javax.inject.Inject
 
 class MoviesViewModel @Inject constructor(private var moviesRepository: MoviesRepository) :
     BaseViewModel() {
-    val loading = MutableLiveData<Boolean>()
+    companion object {
+        private const val PER_PAGE = 20
+    }
+
+    val isLoading = MutableLiveData<Boolean>()
     var movies = MutableLiveData<List<Movie>>()
-    var error = MutableLiveData<RetrofitException>()
+    var loadingError = MutableLiveData<RetrofitException>()
 
     var currentMovies = mutableListOf<Movie>()
 
     private var isQueryExhausted: Boolean = false
-    private var isPerformingQuery: Boolean = false
+    private var isExecutingQuery: Boolean = false
 
     var sortBy: String? = Category.RELEASE_DATE.category
 
@@ -32,16 +36,16 @@ class MoviesViewModel @Inject constructor(private var moviesRepository: MoviesRe
 
     //for first page
     fun getList() {
-        if (!isPerformingQuery) {
+        if (!isExecutingQuery) {
             isQueryExhausted = false
-            isPerformingQuery = true
+            isExecutingQuery = true
             getMovies()
         }
     }
 
     //for next page
     fun getNextPage() {
-        if (!isQueryExhausted && !isPerformingQuery) {
+        if (!isQueryExhausted && !isExecutingQuery) {
             _pageNumber.value = _pageNumber.value?.plus(1)
             getMovies()
         }
@@ -52,16 +56,16 @@ class MoviesViewModel @Inject constructor(private var moviesRepository: MoviesRe
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.ui())
             .doOnSubscribe {
-                loading.value = true
+                isLoading.value = true
             }.doFinally {
-                loading.value = false
+                isLoading.value = false
             }.subscribe({
                 currentMovies.addAll(it.results ?: listOf())
                 movies.value = currentMovies
-                isPerformingQuery = false
-                isQueryExhausted = it.results?.size ?: 0 < 10
+                isExecutingQuery = false
+                isQueryExhausted = it.results?.size ?: 0 < PER_PAGE
             }, {
-                if (it is RetrofitException) error.value = it
+                if (it is RetrofitException) loadingError.value = it
             })
         )
     }

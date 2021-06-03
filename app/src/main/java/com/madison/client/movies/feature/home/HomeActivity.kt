@@ -10,7 +10,7 @@ class HomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movies)
-        setUpToolbar()
+        setSupportActionBar(toolbar)
 
         if (savedInstanceState == null) {
             navigator.addFragment(
@@ -18,9 +18,5 @@ class HomeActivity : BaseActivity() {
                 R.id.contentFrame, false
             )
         }
-    }
-
-    private fun setUpToolbar() {
-        setSupportActionBar(toolbar)
     }
 }

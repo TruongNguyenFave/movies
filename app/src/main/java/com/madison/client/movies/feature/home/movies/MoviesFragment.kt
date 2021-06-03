@@ -11,8 +11,10 @@ import com.madison.client.movies.data.model.Movie
 import com.madison.client.movies.databinding.FragmentMoviesBinding
 import com.madison.client.movies.feature.base.BaseFragment
 import com.madison.client.movies.feature.details.moviedetails.MovieDetailsFragment
+import com.madison.client.movies.feature.home.HomeActivity
 import com.madison.client.movies.feature.home.movies.adapter.MovieAdapter
 import com.royal.pahang.durian.feature.record.MovieDetailsActivity
+import kotlinx.android.synthetic.main.fragment_movies.*
 
 class MoviesFragment : BaseFragment() {
     private lateinit var moviesViewModel: MoviesViewModel
@@ -39,7 +41,7 @@ class MoviesFragment : BaseFragment() {
     }
 
     override fun initView() {
-        moviesViewModel.getMovies()
+        getMovieList()
     }
 
     private fun initAdapter() {
@@ -73,7 +75,6 @@ class MoviesFragment : BaseFragment() {
         moviesViewModel.getList()
     }
 
-
     override fun handleEvent() {
         super.handleEvent()
         adapter.setClickLister(object : MovieAdapter.OnClickListener {
@@ -84,6 +85,11 @@ class MoviesFragment : BaseFragment() {
                 navigator.startActivity(requireActivity(), MovieDetailsActivity::class.java, bundle)
             }
         })
+
+        swipeRefreshLayout.setOnRefreshListener {
+            getMovieList()
+            swipeRefreshLayout.isRefreshing = false
+        }
     }
 
     private val onMovieClickListener: (movie: Movie) -> Unit = { movie ->
@@ -104,25 +110,31 @@ class MoviesFragment : BaseFragment() {
                 moviesViewModel.apply {
                     sortBy = Category.RELEASE_DATE.category
                 }
-                moviesViewModel.getMovies()
+                getMovieList()
                 true
             }
             R.id.menu_item_alphabetical -> {
                 moviesViewModel.apply {
                     sortBy = Category.ALPHABETICAL.category
                 }
-                moviesViewModel.getMovies()
+                getMovieList()
                 true
             }
             R.id.menu_item_rating -> {
                 moviesViewModel.apply {
                     sortBy = Category.RATING.category
                 }
-                moviesViewModel.getMovies()
+                getMovieList()
                 true
             }
 
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onBackPressedCallback() {
+        if (requireActivity() is HomeActivity) {
+            (requireActivity() as HomeActivity).finish()
         }
     }
 }
