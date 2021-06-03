@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/alizarinCrimson</color>
-    <color name="colorPrimaryDark">@color/alizarinCrimson</color>
-    <color name="colorAccent">@color/alizarinCrimson</color>
-
-    <color name="alizarinCrimson">#E32626</color>
-    <color name="alizarinCrimsonAlpha50">#80E32626</color>
-    <color name="limeade">#33BF00</color>
-    <color name="doveGray">#707070</color>
-    <color name="whiteAlpha50">#80ffffff</color>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="movie_overview_text_color">@android:color/black</color>
+    <color name="movie_review_text_color">@android:color/black</color>
+    <color name="button_like_bg_color">#357EBD</color>
 </resources>

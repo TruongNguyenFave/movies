@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Movies</string>
+    <string name="sort_by">Sort by</string>
+    <string name="top_rated">Top rated</string>
+    <string name="popular">Popular</string>
+    <string name="all">All Movies</string>
+    <string name="book_movie">Book movie</string>
+    <string name="movie_user_rating">Rating: %1$.1f/10</string>
+    <string name="movie_release_date">Release date: %s</string>
+    <string name="liked">Liked</string>
+    <string name="unlike">Like</string>
 </resources>
