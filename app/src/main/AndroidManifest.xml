@@ -24,5 +24,6 @@
             </intent-filter>
         </activity>
         <activity android:name="com.royal.pahang.durian.feature.record.MovieDetailsActivity" />
+        <activity android:name=".feature.bookmovie.BookMovieActivity" />
     </application>
 </manifest>

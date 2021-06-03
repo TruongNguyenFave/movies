@@ -1,15 +1,22 @@
 package com.madison.client.movies.feature.details.moviedetails
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProviders
 import com.madison.client.movies.data.model.Movie
 import com.madison.client.movies.databinding.FragmentMovieDetailBinding
+import com.madison.client.movies.extention.helper.viewextension.safeClick
 import com.madison.client.movies.feature.base.BaseFragment
+import com.madison.client.movies.feature.bookmovie.BookMovieActivity
 import com.royal.pahang.durian.feature.record.MovieDetailsActivity
+import kotlinx.android.synthetic.main.fragment_movie_detail.*
 
 class MovieDetailsFragment : BaseFragment() {
+    private lateinit var movieDetailsViewModel: MovieDetailsViewModel
     private lateinit var binding: FragmentMovieDetailBinding
 
     companion object {
@@ -28,7 +35,10 @@ class MovieDetailsFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+        movieDetailsViewModel =
+            ViewModelProviders.of(this, viewModelFactory).get(MovieDetailsViewModel::class.java)
         binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
+        binding.viewModel = movieDetailsViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         setHasOptionsMenu(true)
         return binding.root
@@ -38,11 +48,19 @@ class MovieDetailsFragment : BaseFragment() {
         arguments?.let {
             if (it.containsKey(MOVIE_EXTRA_KEY)) {
                 it.getParcelable<Movie>(MOVIE_EXTRA_KEY)?.let {
-                    binding.movie = it
-                    binding.executePendingBindings()
+                    it.id?.let {
+                        movieDetailsViewModel.getMovieDetails(it)
+                    }
                 }
             }
         }
+    }
+
+    override fun handleEvent() {
+        super.handleEvent()
+        btnBookMovie.safeClick(View.OnClickListener {
+            navigator.startActivity(requireActivity(), BookMovieActivity::class.java)
+        })
     }
 
     override fun onBackPressedCallback() {
