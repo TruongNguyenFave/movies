@@ -9,7 +9,6 @@ import com.madison.client.movies.R
 import com.madison.client.movies.data.model.Movie
 import com.madison.client.movies.extention.helper.imageloader.loadImage
 import com.madison.client.movies.feature.base.BaseFragment
-import com.madison.client.movies.feature.home.movies.adapter.MoviesAdapter
 import com.royal.pahang.durian.feature.record.MovieDetailsActivity
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
 

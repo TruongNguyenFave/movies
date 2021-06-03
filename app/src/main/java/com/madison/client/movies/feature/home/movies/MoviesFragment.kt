@@ -1,31 +1,29 @@
-package com.royal.pahang.durian.feature.fruitsupply.fruitsupply
+package com.madison.client.movies.feature.home.movies
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import com.madison.client.movies.R
 import com.madison.client.movies.data.model.Movie
-import com.madison.client.movies.extention.helper.viewextension.handleGoneVisibility
+import com.madison.client.movies.databinding.FragmentMoviesBinding
 import com.madison.client.movies.feature.base.BaseFragment
 import com.madison.client.movies.feature.details.moviedetails.MovieDetailsFragment
-import com.madison.client.movies.feature.home.movies.adapter.MoviesAdapter
+import com.madison.client.movies.feature.home.movies.adapter.MovieAdapter
 import com.royal.pahang.durian.feature.record.MovieDetailsActivity
-import kotlinx.android.synthetic.main.fragment_movies.*
 
 class MoviesFragment : BaseFragment() {
     private lateinit var moviesViewModel: MoviesViewModel
-    private lateinit var adapter: MoviesAdapter
+    private lateinit var adapter: MovieAdapter
+    private lateinit var binding: FragmentMoviesBinding
 
     private val currentPage = 1
 
     companion object {
         fun newInstance(): MoviesFragment {
-            val fragment = MoviesFragment()
-            return fragment
+            return MoviesFragment()
         }
     }
 
@@ -34,27 +32,35 @@ class MoviesFragment : BaseFragment() {
     ): View? {
         moviesViewModel =
             ViewModelProviders.of(this, viewModelFactory).get(MoviesViewModel::class.java)
-        return inflater.inflate(R.layout.fragment_movies, container, false)
+        binding = FragmentMoviesBinding.inflate(inflater, container, false)
+        binding.viewModel = moviesViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        initAdapter()
+        setHasOptionsMenu(true)
+        return binding.root
     }
 
     override fun initView() {
-        initAdapter()
         moviesViewModel.getMovies(currentPage)
     }
 
     private fun initAdapter() {
-        adapter = MoviesAdapter(requireContext())
-        val gridLayoutManager = GridLayoutManager(
-            requireContext(),
-            resources.getInteger(R.integer.number_of_grid_columns)
-        )
-        rcvMovies.adapter = adapter
-        rcvMovies.layoutManager = gridLayoutManager
+        binding.rcvMovies.apply {
+            this@MoviesFragment.adapter = MovieAdapter(
+                onMovieClickListener
+            )
+            val gridLayoutManager = GridLayoutManager(
+                requireContext(),
+                resources.getInteger(R.integer.number_of_grid_columns)
+            )
+            adapter = this@MoviesFragment.adapter
+            layoutManager = gridLayoutManager
+        }
     }
 
     override fun handleEvent() {
         super.handleEvent()
-        adapter.setClickLister(object : MoviesAdapter.OnClickListener {
+        adapter.setClickLister(object : MovieAdapter.OnClickListener {
             override fun clickItem(movie: Movie) {
                 val bundle = Bundle().apply {
                     putParcelable(MovieDetailsFragment.MOVIE_EXTRA_KEY, movie)
@@ -64,24 +70,14 @@ class MoviesFragment : BaseFragment() {
         })
     }
 
-    override fun observeLiveData() {
-        super.observeLiveData()
-        moviesViewModel.isGettingMoviesObservable.observe(
-            viewLifecycleOwner,
-            Observer {
-                progressBar.handleGoneVisibility(it)
-            })
-        moviesViewModel.getMoviesSuccessObservable.observe(
-            viewLifecycleOwner,
-            Observer {
-                if (!it.results.isNullOrEmpty()) {
-                    adapter.injectData(it.results)
-                }
-            })
-        moviesViewModel.getMoviesErrorObservable.observe(
-            viewLifecycleOwner,
-            Observer {
+    private val onMovieClickListener: (movie: Movie) -> Unit = { movie ->
+        val bundle = Bundle().apply {
+            putParcelable(MovieDetailsFragment.MOVIE_EXTRA_KEY, movie)
+        }
+        navigator.startActivity(requireActivity(), MovieDetailsActivity::class.java, bundle)
+    }
 
-            })
+    interface Callbacks {
+        fun onMovieClick(movie: Movie)
     }
 }

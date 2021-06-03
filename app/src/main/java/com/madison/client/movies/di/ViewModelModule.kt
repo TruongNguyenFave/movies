@@ -2,7 +2,7 @@ package com.madison.client.movies.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.royal.pahang.durian.feature.fruitsupply.fruitsupply.MoviesViewModel
+import com.madison.client.movies.feature.home.movies.MoviesViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

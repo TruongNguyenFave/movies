@@ -9,23 +9,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="@dimen/detail_activity_vertical_margin"
-        android:paddingBottom="@dimen/detail_activity_vertical_margin"
+        android:paddingTop="@dimen/dp_16"
+        android:paddingBottom="@dimen/dp_16"
         tools:context=".details.MovieDetailFragment">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/detail_activity_horizontal_margin"
-            android:paddingRight="@dimen/detail_activity_horizontal_margin">
+            android:paddingLeft="@dimen/dp_16"
+            android:paddingRight="@dimen/dp_16">
 
             <ImageView
                 android:id="@+id/imvMoviePoster"
-                android:layout_width="@dimen/detail_movie_poster_width"
-                android:layout_height="@dimen/detail_movie_poster_height"
-                android:layout_marginRight="@dimen/detail_movie_poster_padding_right"
-                android:layout_marginBottom="@dimen/detail_movie_poster_vertical_padding"
+                android:layout_width="@dimen/dp_140"
+                android:layout_height="@dimen/dp_210"
+                android:layout_marginRight="@dimen/dp_16"
+                android:layout_marginBottom="@dimen/dp_16"
                 android:scaleType="fitXY" />
 
             <LinearLayout
@@ -38,8 +38,8 @@
                     style="?android:attr/textAppearanceMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/detail_title_left_padding"
-                    android:layout_marginBottom="@dimen/detail_title_bottom_margin"
+                    android:layout_marginLeft="@dimen/dp_4"
+                    android:layout_marginBottom="@dimen/dp_4"
                     android:textColor="@color/movie_overview_text_color"
                     android:textIsSelectable="true"
                     android:textStyle="bold" />
@@ -50,7 +50,7 @@
                     android:id="@+id/btnWatchTrailer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/button_vertical_margin"
+                    android:layout_marginTop="@dimen/dp_16"
                     android:enabled="false"
                     android:text="@string/book_movie"
                     android:theme="@style/Button.ColorPrimary" />
@@ -63,8 +63,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/details_horizontal_margin"
-            android:paddingRight="@dimen/details_horizontal_margin">
+            android:paddingLeft="@dimen/dp_16"
+            android:paddingRight="@dimen/dp_16">
 
             <TextView
                 android:id="@+id/tvMovieUserRating"
@@ -89,9 +89,9 @@
             style="?android:attr/textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="@dimen/detail_activity_horizontal_margin"
-            android:paddingTop="@dimen/movie_overview_padding_top"
-            android:paddingRight="@dimen/detail_activity_horizontal_margin"
+            android:paddingLeft="@dimen/dp_16"
+            android:paddingTop="@dimen/dp_16"
+            android:paddingRight="@dimen/dp_16"
             android:textColor="@color/movie_overview_text_color"
             android:textIsSelectable="true" />
     </LinearLayout>

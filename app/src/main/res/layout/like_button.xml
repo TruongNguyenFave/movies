@@ -3,12 +3,12 @@
     android:id="@+id/layout_like_button"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/detail_title_left_padding"
-    android:layout_marginRight="@dimen/detail_title_left_padding"
+    android:layout_marginLeft="@dimen/dp_4"
+    android:layout_marginRight="@dimen/dp_4"
     android:background="@color/button_like_bg_color"
     android:gravity="center"
     android:orientation="horizontal"
-    android:padding="@dimen/button_padding">
+    android:padding="@dimen/dp_6">
 
     <ImageView
         android:id="@+id/imv_like"

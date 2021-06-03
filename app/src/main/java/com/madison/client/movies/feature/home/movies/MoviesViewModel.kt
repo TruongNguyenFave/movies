@@ -1,4 +1,4 @@
-package com.royal.pahang.durian.feature.fruitsupply.fruitsupply
+package com.madison.client.movies.feature.home.movies
 
 import androidx.lifecycle.MutableLiveData
 import com.madison.client.movies.data.model.MovieResponse
