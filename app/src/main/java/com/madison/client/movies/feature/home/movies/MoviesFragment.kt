@@ -1,12 +1,12 @@
 package com.madison.client.movies.feature.home.movies
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.madison.client.movies.R
+import com.madison.client.movies.data.model.Category
 import com.madison.client.movies.data.model.Movie
 import com.madison.client.movies.databinding.FragmentMoviesBinding
 import com.madison.client.movies.feature.base.BaseFragment
@@ -18,8 +18,6 @@ class MoviesFragment : BaseFragment() {
     private lateinit var moviesViewModel: MoviesViewModel
     private lateinit var adapter: MovieAdapter
     private lateinit var binding: FragmentMoviesBinding
-
-    private val currentPage = 1
 
     companion object {
         fun newInstance(): MoviesFragment {
@@ -41,7 +39,7 @@ class MoviesFragment : BaseFragment() {
     }
 
     override fun initView() {
-        moviesViewModel.getMovies(currentPage)
+        moviesViewModel.getMovies()
     }
 
     private fun initAdapter() {
@@ -56,7 +54,25 @@ class MoviesFragment : BaseFragment() {
             adapter = this@MoviesFragment.adapter
             layoutManager = gridLayoutManager
         }
+        binding.rcvMovies.addOnScrollListener(scrollListener)
     }
+
+    //scroll to get Next Page of result
+    private val scrollListener: RecyclerView.OnScrollListener =
+        object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1)) {
+                    moviesViewModel.getNextPage()
+                }
+            }
+        }
+
+    fun getMovieList() {
+        moviesViewModel.resetPageNumber()
+        moviesViewModel.getList()
+    }
+
 
     override fun handleEvent() {
         super.handleEvent()
@@ -77,7 +93,36 @@ class MoviesFragment : BaseFragment() {
         navigator.startActivity(requireActivity(), MovieDetailsActivity::class.java, bundle)
     }
 
-    interface Callbacks {
-        fun onMovieClick(movie: Movie)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.order_by_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_item_release_date -> {
+                moviesViewModel.apply {
+                    sortBy = Category.RELEASE_DATE.category
+                }
+                moviesViewModel.getMovies()
+                true
+            }
+            R.id.menu_item_alphabetical -> {
+                moviesViewModel.apply {
+                    sortBy = Category.ALPHABETICAL.category
+                }
+                moviesViewModel.getMovies()
+                true
+            }
+            R.id.menu_item_rating -> {
+                moviesViewModel.apply {
+                    sortBy = Category.RATING.category
+                }
+                moviesViewModel.getMovies()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

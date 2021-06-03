@@ -3,6 +3,7 @@ package com.madison.client.movies.extention.helper.viewextension
 import android.os.SystemClock
 import android.view.View
 import android.widget.ImageView
+import android.widget.ProgressBar
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -39,4 +40,21 @@ fun RecyclerView.submitMovieList(movies: List<Movie>?) {
         adapter.submitList(movies)
     }
 }
+
+@BindingAdapter("firstPageloading", "pageNumber")
+fun ProgressBar.firstPageLoadingVisibility(
+    loading: Boolean?,
+    pageNumber: Int = 1
+) {
+    this.handleGoneVisibility(loading ?: false && pageNumber == 1)
+}
+
+@BindingAdapter("paginationLoading", "pageNumber")
+fun ProgressBar.paginationLoadingVisibility(
+    loading: Boolean?,
+    pageNumber: Int = 1
+) {
+    this.handleGoneVisibility(loading ?: false && pageNumber > 1)
+}
+
 

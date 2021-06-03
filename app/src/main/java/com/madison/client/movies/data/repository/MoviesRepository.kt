@@ -7,7 +7,7 @@ import io.reactivex.Single
 class MoviesRepository constructor(
     private val moviesRemoteDataSource: MoviesRemoteDataSource
 ) {
-    fun getMovies(page: Int): Single<MovieResponse> {
-        return moviesRemoteDataSource.getMovies(page)
+    fun getMovies(page: Int, sortBy: String? = null): Single<MovieResponse> {
+        return moviesRemoteDataSource.getMovies(page, sortBy)
     }
 }

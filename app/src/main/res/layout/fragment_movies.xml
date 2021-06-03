@@ -14,25 +14,44 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            tools:context=".ui.Movies.MovieActivity">
+            android:layout_height="match_parent">
 
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/swipe_refresh_layout"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="1"
+                tools:context=".ui.Movies.MovieActivity">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcvMovies"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clipToPadding="false"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:scrollbars="vertical"
-                    app:movieList="@{viewModel.getMoviesSuccessObservable.results}" />
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-        </LinearLayout>
+                    app:movieList="@{viewModel.movies}" />
+
+                <ProgressBar
+                    android:id="@+id/pbPaginationLoading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="visible"
+                    app:pageNumber="@{viewModel.pageNumber}"
+                    app:paginationLoading="@{viewModel.loading}" />
+            </LinearLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <ProgressBar
+            android:id="@+id/pbLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            app:firstPageloading="@{viewModel.loading}"
+            app:pageNumber="@{viewModel.pageNumber}" />
     </RelativeLayout>
 </layout>
