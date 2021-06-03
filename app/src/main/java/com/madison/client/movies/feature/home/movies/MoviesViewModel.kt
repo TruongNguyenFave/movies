@@ -39,7 +39,7 @@ class MoviesViewModel @Inject constructor(private var moviesRepository: MoviesRe
         if (!isExecutingQuery) {
             isQueryExhausted = false
             isExecutingQuery = true
-            getMovies()
+            getListMovies()
         }
     }
 
@@ -47,11 +47,11 @@ class MoviesViewModel @Inject constructor(private var moviesRepository: MoviesRe
     fun getNextPage() {
         if (!isQueryExhausted && !isExecutingQuery) {
             _pageNumber.value = _pageNumber.value?.plus(1)
-            getMovies()
+            getListMovies()
         }
     }
 
-    fun getMovies() {
+    fun getListMovies() {
         compositeDisposable.add(moviesRepository.getMovies(pageNumber.value!!, sortBy)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.ui())
@@ -72,5 +72,6 @@ class MoviesViewModel @Inject constructor(private var moviesRepository: MoviesRe
 
     fun resetPageNumber() {
         _pageNumber.value = 1
+        this.currentMovies.clear()
     }
 }

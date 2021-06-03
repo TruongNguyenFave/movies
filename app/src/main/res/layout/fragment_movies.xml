@@ -32,7 +32,10 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:scrollbars="vertical"
-                    app:movieList="@{viewModel.movies}" />
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:pageNumber="@{viewModel.pageNumber}"
+                    app:movieList="@{viewModel.movies}"
+                    app:spanCount="@integer/number_of_grid_columns" />
 
                 <ProgressBar
                     android:id="@+id/pbPaginationLoading"

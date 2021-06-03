@@ -63,11 +63,15 @@ fun ImageView.loadImage(imageUrl: String?) {
         .into(this)
 }
 
-@BindingAdapter("movieList")
-fun RecyclerView.submitMovieList(movies: List<Movie>?) {
+@BindingAdapter("movieList", "pageNumber")
+fun RecyclerView.submitMovieList(movies: List<Movie>?, pageNumber: Int = 1) {
     val adapter = this.adapter as MovieAdapter
     movies?.let {
-        adapter.submitList(movies)
+        if (pageNumber == 1) {
+            adapter.injectData(movies)
+        } else {
+            adapter.injectDataWithLoadMore(movies)
+        }
     }
 }
 

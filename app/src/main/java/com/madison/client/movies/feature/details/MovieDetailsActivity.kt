@@ -25,12 +25,14 @@ class MovieDetailsActivity : BaseActivity() {
         imvMovieBackdrop.loadImage(movie?.backdropPath)
         toolbarLayout.title = movie?.originalTitle
 
-        navigator.addFragment(
-            supportFragmentManager,
-            MovieDetailsFragment.newInstance(movie),
-            R.id.movieDetailContainer,
-            true
-        )
+        if (savedInstanceState == null) {
+            navigator.addFragment(
+                supportFragmentManager,
+                MovieDetailsFragment.newInstance(movie),
+                R.id.movieDetailContainer,
+                true
+            )
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

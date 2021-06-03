@@ -2,24 +2,42 @@ package com.madison.client.movies.feature.home.movies.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.madison.client.movies.data.model.Movie
 import com.madison.client.movies.databinding.ItemMovieBinding
 
 class MovieAdapter(private val onMovieClickListener: (Movie) -> Unit) :
-    ListAdapter<Movie, MovieAdapter.MovieViewHolder>(MovieDiffUtil()) {
+    RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+    private var movies = ArrayList<Movie>()
     private var onClickListener: OnClickListener? = null
+
+    fun injectData(movies: List<Movie>) {
+        this.movies.clear()
+        this.movies.addAll(movies)
+        notifyDataSetChanged()
+    }
+
+    fun injectDataWithLoadMore(movies: List<Movie>) {
+        val curSize = itemCount
+        this.movies.addAll(movies)
+        this.notifyItemRangeInserted(curSize, itemCount)
+    }
+
+    fun clearData() {
+        this.movies.clear()
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         return MovieViewHolder.getInstance(parent, onMovieClickListener)
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        val movie = getItem(position)
+        val movie = movies[position]
         holder.bindData(movie)
     }
+
+    override fun getItemCount(): Int = movies.size
 
     class MovieViewHolder private constructor(
         private val binding: ItemMovieBinding,
@@ -47,17 +65,6 @@ class MovieAdapter(private val onMovieClickListener: (Movie) -> Unit) :
             binding.viewHolder = this@MovieViewHolder
             binding.executePendingBindings()
         }
-    }
-
-    class MovieDiffUtil : DiffUtil.ItemCallback<Movie>() {
-        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem == newItem
-        }
-
     }
 
     fun setClickLister(clickListener: OnClickListener) {

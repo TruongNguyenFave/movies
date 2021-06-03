@@ -1,9 +1,9 @@
 package com.madison.client.movies.feature.home.movies
 
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.*
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.madison.client.movies.R
 import com.madison.client.movies.data.model.Category
@@ -49,17 +49,13 @@ class MoviesFragment : BaseFragment() {
             this@MoviesFragment.adapter = MovieAdapter(
                 onMovieClickListener
             )
-            val gridLayoutManager = GridLayoutManager(
-                requireContext(),
-                resources.getInteger(R.integer.number_of_grid_columns)
-            )
             adapter = this@MoviesFragment.adapter
-            layoutManager = gridLayoutManager
+            addItemDecoration(MovieItemDecoration())
         }
         binding.rcvMovies.addOnScrollListener(scrollListener)
     }
 
-    //scroll to get Next Page of result
+    //scroll to get next page of result
     private val scrollListener: RecyclerView.OnScrollListener =
         object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -135,6 +131,18 @@ class MoviesFragment : BaseFragment() {
     override fun onBackPressedCallback() {
         if (requireActivity() is HomeActivity) {
             (requireActivity() as HomeActivity).finish()
+        }
+    }
+
+    class MovieItemDecoration(private val offset: Int = 3) : RecyclerView.ItemDecoration() {
+        override fun getItemOffsets(
+            outRect: Rect,
+            view: View,
+            parent: RecyclerView,
+            state: RecyclerView.State
+        ) {
+            super.getItemOffsets(outRect, view, parent, state)
+            outRect.set(offset, offset, offset, offset)
         }
     }
 }

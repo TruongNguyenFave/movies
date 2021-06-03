@@ -58,10 +58,10 @@
                     <RatingBar
                         android:id="@+id/ratingBar"
                         style="?android:attr/ratingBarStyleIndicator"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:numStars="5"
+                        android:numStars="4"
                         android:progressBackgroundTint="@android:color/white"
                         android:progressTint="@color/amber"
                         android:rating="@{viewModel.movie.popularity}"
@@ -75,11 +75,17 @@
                         android:id="@+id/btnBookMovie"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_16"
+                        android:layout_marginTop="@dimen/dp_10"
                         android:text="@string/book_movie"
                         android:theme="@style/Button.ColorPrimary" />
 
-                    <include layout="@layout/like_button" />
+                    <include
+                        layout="@layout/like_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/dp_4"
+                        android:layout_marginTop="@dimen/dp_4"
+                        android:layout_marginRight="@dimen/dp_4" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -91,6 +97,7 @@
                 android:paddingHorizontal="@dimen/dp_16"
                 android:paddingVertical="@dimen/dp_10"
                 android:textSize="@dimen/sp_12"
+                android:textStyle="bold"
                 app:genres="@{viewModel.movie.genres}"
                 tools:text="genres" />
 
