@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.madison.client.movies.feature.base.BaseActivity
 import javax.inject.Inject
 
 class Navigator @Inject constructor() {
@@ -22,15 +23,18 @@ class Navigator @Inject constructor() {
         }
     }
 
+    fun popFragment(activity: Activity) {
+        if (activity is BaseActivity) activity.supportFragmentManager.popBackStack()
+    }
+
     fun startActivity(
-        activity: Activity,
-        clazz: Class<out Activity>,
-        bundle: Bundle? = null
+        activity: Activity, clazz: Class<out Activity>, bundle: Bundle? = null
     ) {
         val intent = Intent(activity, clazz)
         if (bundle != null) {
             intent.putExtras(bundle)
         }
+
         activity.startActivity(intent)
     }
 }

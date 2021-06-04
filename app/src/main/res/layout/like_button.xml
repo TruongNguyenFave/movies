@@ -20,6 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/dp_10"
+        android:paddingEnd="0dp"
         android:text="@string/unlike"
         android:textColor="@android:color/white"
         android:textSize="@dimen/sp_16" />

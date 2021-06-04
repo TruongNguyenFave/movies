@@ -11,46 +11,56 @@ import javax.inject.Inject
 
 class MoviesViewModel @Inject constructor(private var moviesRepository: MoviesRepository) :
     BaseViewModel() {
+
     companion object {
-        private const val PER_PAGE = 20
+        private const val ITEM_NUMBER_PER_PAGE = 20
     }
 
     val isLoading = MutableLiveData<Boolean>()
+    val pageNumber: LiveData<Int>
+        get() = _pageNumber
+
     var movies = MutableLiveData<List<Movie>>()
     var loadingError = MutableLiveData<RetrofitException>()
+    var sortBy: String? = Category.RELEASE_DATE.category
 
     private var isQueryExhausted: Boolean = false
     private var isExecutingQuery: Boolean = false
 
-    var sortBy: String? = Category.RELEASE_DATE.category
-
     private val _pageNumber = MutableLiveData<Int>()
-    val pageNumber: LiveData<Int>
-        get() = _pageNumber
 
     init {
         _pageNumber.value = 1
     }
 
-    //for first page
-    fun getList() {
+    /**
+     * fetch movies from remote at page number 1
+     */
+    fun fetchMoviesFromFirstPage() {
+        resetPageNumber()
         if (!isExecutingQuery) {
             isQueryExhausted = false
             isExecutingQuery = true
-            getListMovies()
+            getMovies()
         }
     }
 
-    //for next page
-    fun getNextPage() {
+    /**
+     * fetch movies from remote at _pageNumber
+     */
+    fun fetchMoviesOfNextPage() {
         if (!isQueryExhausted && !isExecutingQuery) {
             _pageNumber.value = _pageNumber.value?.plus(1)
-            getListMovies()
+            getMovies()
         }
     }
 
-    fun getListMovies() {
-        compositeDisposable.add(moviesRepository.getMovies(pageNumber.value!!, sortBy)
+    private fun resetPageNumber() {
+        _pageNumber.value = 1
+    }
+
+    private fun getMovies() {
+        compositeDisposable.add(moviesRepository.getMovies(pageNumber.value?:1, sortBy)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.ui())
             .doOnSubscribe {
@@ -60,14 +70,10 @@ class MoviesViewModel @Inject constructor(private var moviesRepository: MoviesRe
             }.subscribe({
                 movies.value = it.results
                 isExecutingQuery = false
-                isQueryExhausted = it.results?.size ?: 0 < PER_PAGE
+                isQueryExhausted = it.results?.size ?: 0 < ITEM_NUMBER_PER_PAGE
             }, {
                 if (it is RetrofitException) loadingError.value = it
             })
         )
-    }
-
-    fun resetPageNumber() {
-        _pageNumber.value = 1
     }
 }

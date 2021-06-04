@@ -10,10 +10,10 @@ import com.madison.client.movies.data.model.Category
 import com.madison.client.movies.data.model.Movie
 import com.madison.client.movies.databinding.FragmentMoviesBinding
 import com.madison.client.movies.feature.base.BaseFragment
+import com.madison.client.movies.feature.details.MovieDetailsActivity
 import com.madison.client.movies.feature.details.moviedetails.MovieDetailsFragment
 import com.madison.client.movies.feature.home.HomeActivity
 import com.madison.client.movies.feature.home.movies.adapter.MovieAdapter
-import com.royal.pahang.durian.feature.record.MovieDetailsActivity
 import kotlinx.android.synthetic.main.fragment_movies.*
 
 class MoviesFragment : BaseFragment() {
@@ -29,7 +29,7 @@ class MoviesFragment : BaseFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         moviesViewModel =
             ViewModelProviders.of(this, viewModelFactory).get(MoviesViewModel::class.java)
         binding = FragmentMoviesBinding.inflate(inflater, container, false)
@@ -41,7 +41,7 @@ class MoviesFragment : BaseFragment() {
     }
 
     override fun initView() {
-        getMovieList()
+        fetchMoviesFromFirstPage()
     }
 
     private fun initAdapter() {
@@ -61,14 +61,13 @@ class MoviesFragment : BaseFragment() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1)) {
-                    moviesViewModel.getNextPage()
+                    moviesViewModel.fetchMoviesOfNextPage()
                 }
             }
         }
 
-    fun getMovieList() {
-        moviesViewModel.resetPageNumber()
-        moviesViewModel.getList()
+    private fun fetchMoviesFromFirstPage() {
+        moviesViewModel.fetchMoviesFromFirstPage()
     }
 
     override fun handleEvent() {
@@ -83,7 +82,7 @@ class MoviesFragment : BaseFragment() {
         })
 
         swipeRefreshLayout.setOnRefreshListener {
-            getMovieList()
+            fetchMoviesFromFirstPage()
             swipeRefreshLayout.isRefreshing = false
         }
     }
@@ -106,21 +105,21 @@ class MoviesFragment : BaseFragment() {
                 moviesViewModel.apply {
                     sortBy = Category.RELEASE_DATE.category
                 }
-                getMovieList()
+                fetchMoviesFromFirstPage()
                 true
             }
             R.id.menu_item_alphabetical -> {
                 moviesViewModel.apply {
                     sortBy = Category.ALPHABETICAL.category
                 }
-                getMovieList()
+                fetchMoviesFromFirstPage()
                 true
             }
             R.id.menu_item_rating -> {
                 moviesViewModel.apply {
                     sortBy = Category.RATING.category
                 }
-                getMovieList()
+                fetchMoviesFromFirstPage()
                 true
             }
 
@@ -129,9 +128,7 @@ class MoviesFragment : BaseFragment() {
     }
 
     override fun onBackPressedCallback() {
-        if (requireActivity() is HomeActivity) {
-            (requireActivity() as HomeActivity).finish()
-        }
+        requireActivity().finish()
     }
 
     class MovieItemDecoration(private val offset: Int = 3) : RecyclerView.ItemDecoration() {

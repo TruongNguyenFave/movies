@@ -1,4 +1,4 @@
-package com.royal.pahang.durian.feature.fruitsupply.fruitsupply
+package com.madison.client.movies.feature.home.movies
 
 import dagger.Module
 

@@ -50,8 +50,7 @@ class MovieAdapter(private val onMovieClickListener: (Movie) -> Unit) :
                 parent: ViewGroup,
                 onMovieClickListener: (Movie) -> Unit
             ): MovieViewHolder {
-                val inflater = LayoutInflater.from(parent.context)
-                val binding = ItemMovieBinding.inflate(inflater, parent, false)
+                val binding = ItemMovieBinding.inflate( LayoutInflater.from(parent.context), parent, false)
                 return MovieViewHolder(
                     binding,
                     onMovieClickListener

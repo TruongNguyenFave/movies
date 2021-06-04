@@ -1,4 +1,4 @@
-package com.royal.pahang.durian.feature.record
+package com.madison.client.movies.feature.details
 
 import android.os.Bundle
 import android.view.MenuItem

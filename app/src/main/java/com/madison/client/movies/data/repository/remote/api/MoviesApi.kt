@@ -1,8 +1,8 @@
 package com.madison.client.movies.data.repository.remote.api
 
+import com.madison.client.movies.BuildConfig
 import com.madison.client.movies.data.model.Movie
 import com.madison.client.movies.data.model.MovieResponse
-import com.madison.client.movies.extention.helper.utils.API_KEY
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -13,12 +13,12 @@ interface MoviesApi {
     fun getMovies(
         @Query("page") page: Int,
         @Query("sort_by") sortBy: String?,
-        @Query("api_key") apiKey: String = API_KEY
+        @Query("api_key") apiKey: String = BuildConfig.API_KEY
     ): Single<MovieResponse>
 
     @GET("movie/{id}")
     fun getMovieDetails(
         @Path("id") id: Int?,
-        @Query("api_key") apiKey: String = API_KEY
+        @Query("api_key") apiKey: String = BuildConfig.API_KEY
     ): Single<Movie>
 }
