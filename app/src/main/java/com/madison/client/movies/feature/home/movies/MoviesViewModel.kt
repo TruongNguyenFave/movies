@@ -19,8 +19,6 @@ class MoviesViewModel @Inject constructor(private var moviesRepository: MoviesRe
     var movies = MutableLiveData<List<Movie>>()
     var loadingError = MutableLiveData<RetrofitException>()
 
-    var currentMovies = mutableListOf<Movie>()
-
     private var isQueryExhausted: Boolean = false
     private var isExecutingQuery: Boolean = false
 
@@ -60,8 +58,7 @@ class MoviesViewModel @Inject constructor(private var moviesRepository: MoviesRe
             }.doFinally {
                 isLoading.value = false
             }.subscribe({
-                currentMovies.addAll(it.results ?: listOf())
-                movies.value = currentMovies
+                movies.value = it.results
                 isExecutingQuery = false
                 isQueryExhausted = it.results?.size ?: 0 < PER_PAGE
             }, {
@@ -72,6 +69,5 @@ class MoviesViewModel @Inject constructor(private var moviesRepository: MoviesRe
 
     fun resetPageNumber() {
         _pageNumber.value = 1
-        this.currentMovies.clear()
     }
 }
