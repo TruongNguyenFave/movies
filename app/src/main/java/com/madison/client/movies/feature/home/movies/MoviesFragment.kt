@@ -75,8 +75,7 @@ class MoviesFragment : BaseFragment() {
         }
 
     private fun fetchMoviesFromFirstPage() {
-        moviesViewModel.resetPageNumber()
-        moviesViewModel.fetchMovieList()
+        moviesViewModel.fetchMoviesFromFirstPage()
     }
 
     override fun handleEvent() {

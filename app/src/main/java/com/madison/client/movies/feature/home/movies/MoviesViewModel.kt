@@ -34,9 +34,10 @@ class MoviesViewModel @Inject constructor(private var moviesRepository: MoviesRe
     }
 
     /**
-     * fetch movies from remote at first page
+     * fetch movies from remote at page number 1
      */
-    fun fetchMovieList() {
+    fun fetchMoviesFromFirstPage() {
+        resetPageNumber()
         if (!isExecutingQuery) {
             isQueryExhausted = false
             isExecutingQuery = true
@@ -54,7 +55,7 @@ class MoviesViewModel @Inject constructor(private var moviesRepository: MoviesRe
         }
     }
 
-    fun resetPageNumber() {
+    private fun resetPageNumber() {
         _pageNumber.value = 1
     }
 
