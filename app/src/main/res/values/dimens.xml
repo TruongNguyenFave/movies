@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="movie_grid_title_padding">16dp</dimen>
+
     <integer name="number_of_grid_columns">2</integer>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="app_bar_height">200dp</dimen>
+
+    <dimen name="movie_grid_title_padding">16dp</dimen>
 
     <dimen name="dp_0">0dp</dimen>
     <dimen name="dp_4">4dp</dimen>
@@ -16,6 +19,6 @@
     <dimen name="dp_140">140dp</dimen>
     <dimen name="dp_210">210dp</dimen>
 
-    <dimen name="sp_24">24sp</dimen>
     <dimen name="sp_16">16sp</dimen>
+    <dimen name="sp_24">24sp</dimen>
 </resources>

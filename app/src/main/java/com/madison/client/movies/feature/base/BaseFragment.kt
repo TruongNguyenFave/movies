@@ -10,6 +10,7 @@ import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
 abstract class BaseFragment : DaggerFragment() {
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -18,17 +19,14 @@ abstract class BaseFragment : DaggerFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        val callback = object : OnBackPressedCallback(
-                true // default to enabled
-        ) {
+
+        val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 onBackPressedCallback()
             }
         }
-        requireActivity().onBackPressedDispatcher.addCallback(
-                this, // LifecycleOwner
-                callback
-        )
+
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,6 +46,5 @@ abstract class BaseFragment : DaggerFragment() {
 
     open fun observeLiveData() {}
 
-    // todo change to abstract method later
     open fun onBackPressedCallback() {}
 }

@@ -7,6 +7,7 @@ import dagger.android.support.DaggerDialogFragment
 import javax.inject.Inject
 
 abstract class BaseDialogFragment : DaggerDialogFragment() {
+
     @Inject
     lateinit var navigator: Navigator
 

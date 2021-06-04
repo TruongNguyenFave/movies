@@ -10,7 +10,6 @@ import com.madison.client.movies.databinding.ItemMovieBinding
 
 class MovieAdapter(private val onMovieClickListener: (Movie) -> Unit) :
     ListAdapter<Movie, MovieAdapter.MovieViewHolder>(MovieDiffUtil()) {
-    private var onClickListener: OnClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         return MovieViewHolder.getInstance(parent, onMovieClickListener)
@@ -32,8 +31,7 @@ class MovieAdapter(private val onMovieClickListener: (Movie) -> Unit) :
                 parent: ViewGroup,
                 onMovieClickListener: (Movie) -> Unit
             ): MovieViewHolder {
-                val inflater = LayoutInflater.from(parent.context)
-                val binding = ItemMovieBinding.inflate(inflater, parent, false)
+                val binding = ItemMovieBinding.inflate( LayoutInflater.from(parent.context), parent, false)
                 return MovieViewHolder(
                     binding,
                     onMovieClickListener
@@ -57,14 +55,5 @@ class MovieAdapter(private val onMovieClickListener: (Movie) -> Unit) :
         override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
             return oldItem == newItem
         }
-
-    }
-
-    fun setClickLister(clickListener: OnClickListener) {
-        onClickListener = clickListener
-    }
-
-    interface OnClickListener {
-        fun clickItem(movie: Movie)
     }
 }

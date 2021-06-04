@@ -28,18 +28,16 @@ class NetworkModule {
         return logging
     }
 
-
     @Singleton
     @Provides
     fun provideAuthApi(
             gson: Gson,
             authInterceptor: AuthInterceptor,
-            loggingInterceptor: HttpLoggingInterceptor,
-            context: Context
+            loggingInterceptor: HttpLoggingInterceptor
     ): MoviesApi {
         val interceptors = arrayOf(authInterceptor, loggingInterceptor)
         return ServiceGenerator.generate(
-                BuildConfig.BASE_URL, MoviesApi::class.java, gson, null, interceptors, context
+                BuildConfig.BASE_URL, MoviesApi::class.java, gson, null, interceptors
         )
     }
 

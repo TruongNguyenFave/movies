@@ -58,7 +58,6 @@ class SharedPrefApi(context: Context) {
         sharedPreferences.edit().putStringSet(key, cookies).apply()
     }
 
-
     fun removeKey(key: String) {
         sharedPreferences.edit().let {
             it.remove(key)
@@ -75,8 +74,6 @@ class SharedPrefApi(context: Context) {
     }
 
     companion object {
-        const val PREF_ACCESS_TOKEN = "PREF_ACCESS_TOKEN"
-
         private const val PREFS_NAME = "Preferences"
     }
 }

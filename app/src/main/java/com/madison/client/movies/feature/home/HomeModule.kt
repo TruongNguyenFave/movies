@@ -7,6 +7,7 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class HomeModule {
+
     @ContributesAndroidInjector
     @FragmentScope
     abstract fun bindMoviesFragment(): MoviesFragment

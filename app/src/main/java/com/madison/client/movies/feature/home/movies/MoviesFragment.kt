@@ -10,16 +10,20 @@ import com.madison.client.movies.data.model.Category
 import com.madison.client.movies.data.model.Movie
 import com.madison.client.movies.databinding.FragmentMoviesBinding
 import com.madison.client.movies.feature.base.BaseFragment
+import com.madison.client.movies.feature.details.MovieDetailsActivity
 import com.madison.client.movies.feature.details.moviedetails.MovieDetailsFragment
-import com.madison.client.movies.feature.home.HomeActivity
 import com.madison.client.movies.feature.home.movies.adapter.MovieAdapter
-import com.royal.pahang.durian.feature.record.MovieDetailsActivity
 import kotlinx.android.synthetic.main.fragment_movies.*
 
 class MoviesFragment : BaseFragment() {
+
     private lateinit var moviesViewModel: MoviesViewModel
     private lateinit var adapter: MovieAdapter
     private lateinit var binding: FragmentMoviesBinding
+
+    private val onMovieClickListener: (movie: Movie) -> Unit = { movie ->
+        goToMovieDetailActivity(movie)
+    }
 
     companion object {
         fun newInstance(): MoviesFragment {
@@ -29,29 +33,29 @@ class MoviesFragment : BaseFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         moviesViewModel =
             ViewModelProviders.of(this, viewModelFactory).get(MoviesViewModel::class.java)
+
         binding = FragmentMoviesBinding.inflate(inflater, container, false)
         binding.viewModel = moviesViewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
         initAdapter()
         setHasOptionsMenu(true)
+
         return binding.root
     }
 
     override fun initView() {
-        getMovieList()
+        fetchMoviesFromFirstPage()
     }
 
     private fun initAdapter() {
         binding.rcvMovies.apply {
-            this@MoviesFragment.adapter = MovieAdapter(
-                onMovieClickListener
-            )
+            this@MoviesFragment.adapter = MovieAdapter(onMovieClickListener)
             val gridLayoutManager = GridLayoutManager(
-                requireContext(),
-                resources.getInteger(R.integer.number_of_grid_columns)
+                requireContext(), resources.getInteger(R.integer.number_of_grid_columns)
             )
             adapter = this@MoviesFragment.adapter
             layoutManager = gridLayoutManager
@@ -59,40 +63,32 @@ class MoviesFragment : BaseFragment() {
         binding.rcvMovies.addOnScrollListener(scrollListener)
     }
 
-    //scroll to get Next Page of result
+    // scroll to get Next Page of result
     private val scrollListener: RecyclerView.OnScrollListener =
         object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1)) {
-                    moviesViewModel.getNextPage()
+                    moviesViewModel.fetchMoviesOfNextPage()
                 }
             }
         }
 
-    fun getMovieList() {
+    private fun fetchMoviesFromFirstPage() {
         moviesViewModel.resetPageNumber()
-        moviesViewModel.getList()
+        moviesViewModel.fetchMovieList()
     }
 
     override fun handleEvent() {
         super.handleEvent()
-        adapter.setClickLister(object : MovieAdapter.OnClickListener {
-            override fun clickItem(movie: Movie) {
-                val bundle = Bundle().apply {
-                    putParcelable(MovieDetailsFragment.MOVIE_EXTRA_KEY, movie)
-                }
-                navigator.startActivity(requireActivity(), MovieDetailsActivity::class.java, bundle)
-            }
-        })
 
         swipeRefreshLayout.setOnRefreshListener {
-            getMovieList()
             swipeRefreshLayout.isRefreshing = false
+            fetchMoviesFromFirstPage()
         }
     }
 
-    private val onMovieClickListener: (movie: Movie) -> Unit = { movie ->
+    private fun goToMovieDetailActivity(movie: Movie) {
         val bundle = Bundle().apply {
             putParcelable(MovieDetailsFragment.MOVIE_EXTRA_KEY, movie)
         }
@@ -110,21 +106,21 @@ class MoviesFragment : BaseFragment() {
                 moviesViewModel.apply {
                     sortBy = Category.RELEASE_DATE.category
                 }
-                getMovieList()
+                fetchMoviesFromFirstPage()
                 true
             }
             R.id.menu_item_alphabetical -> {
                 moviesViewModel.apply {
                     sortBy = Category.ALPHABETICAL.category
                 }
-                getMovieList()
+                fetchMoviesFromFirstPage()
                 true
             }
             R.id.menu_item_rating -> {
                 moviesViewModel.apply {
                     sortBy = Category.RATING.category
                 }
-                getMovieList()
+                fetchMoviesFromFirstPage()
                 true
             }
 
@@ -133,8 +129,6 @@ class MoviesFragment : BaseFragment() {
     }
 
     override fun onBackPressedCallback() {
-        if (requireActivity() is HomeActivity) {
-            (requireActivity() as HomeActivity).finish()
-        }
+        requireActivity().finish()
     }
 }

@@ -34,7 +34,7 @@
                     android:id="@+id/imvMoviePoster"
                     android:layout_width="@dimen/dp_140"
                     android:layout_height="@dimen/dp_210"
-                    android:layout_marginRight="@dimen/dp_16"
+                    android:layout_marginEnd="@dimen/dp_16"
                     android:layout_marginBottom="@dimen/dp_16"
                     android:scaleType="fitXY"
                     app:movieImage="@{movie.posterPath}" />
@@ -49,7 +49,7 @@
                         style="?android:attr/textAppearanceMedium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dp_4"
+                        android:layout_marginStart="@dimen/dp_4"
                         android:layout_marginBottom="@dimen/dp_4"
                         android:text="@{movie.originalTitle}"
                         android:textColor="@color/movie_overview_text_color"
@@ -93,7 +93,6 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/movie_overview_text_color"
                     android:textIsSelectable="true" />
-
             </LinearLayout>
 
             <TextView

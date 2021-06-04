@@ -5,10 +5,14 @@ import com.madison.client.movies.extention.helper.scheduler.AppSchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 
 open class BaseViewModel : ViewModel() {
+
     val schedulerProvider = AppSchedulerProvider()
 
     val compositeDisposable = CompositeDisposable()
 
+    /**
+     * Remove all disposables
+     */
     override fun onCleared() {
         super.onCleared()
         if (!compositeDisposable.isDisposed) {

@@ -43,7 +43,6 @@ class RetrofitException(
         }
     }
 
-    // todo update error message later
     private fun getServerMessage(): String? {
         return if (kind == Kind.SERVER && serverErrorResponse != null) {
             serverErrorResponse.message
