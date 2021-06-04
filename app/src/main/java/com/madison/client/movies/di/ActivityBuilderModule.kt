@@ -1,6 +1,8 @@
 package com.madison.client.movies.di
 
 import com.madison.client.movies.di.scope.ActivityScope
+import com.madison.client.movies.feature.bookmovie.BookMovieActivity
+import com.madison.client.movies.feature.bookmovie.BookMovieModule
 import com.madison.client.movies.feature.home.HomeActivity
 import com.madison.client.movies.feature.home.HomeModule
 import com.madison.client.movies.feature.details.MovieDetailsActivity
@@ -21,4 +23,8 @@ abstract class ActivityBuilderModule {
     @ContributesAndroidInjector(modules = [MovieDetailsModule::class])
     @ActivityScope
     abstract fun bindMovieDetailsActivity(): MovieDetailsActivity
+
+    @ContributesAndroidInjector(modules = [BookMovieModule::class])
+    @ActivityScope
+    abstract fun bindBookMovieActivity(): BookMovieActivity
 }

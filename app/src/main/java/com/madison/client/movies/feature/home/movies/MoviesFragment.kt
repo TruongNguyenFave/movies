@@ -1,9 +1,9 @@
 package com.madison.client.movies.feature.home.movies
 
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.*
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.madison.client.movies.R
 import com.madison.client.movies.data.model.Category
@@ -12,18 +12,14 @@ import com.madison.client.movies.databinding.FragmentMoviesBinding
 import com.madison.client.movies.feature.base.BaseFragment
 import com.madison.client.movies.feature.details.MovieDetailsActivity
 import com.madison.client.movies.feature.details.moviedetails.MovieDetailsFragment
+import com.madison.client.movies.feature.home.HomeActivity
 import com.madison.client.movies.feature.home.movies.adapter.MovieAdapter
 import kotlinx.android.synthetic.main.fragment_movies.*
 
 class MoviesFragment : BaseFragment() {
-
     private lateinit var moviesViewModel: MoviesViewModel
     private lateinit var adapter: MovieAdapter
     private lateinit var binding: FragmentMoviesBinding
-
-    private val onMovieClickListener: (movie: Movie) -> Unit = { movie ->
-        goToMovieDetailActivity(movie)
-    }
 
     companion object {
         fun newInstance(): MoviesFragment {
@@ -36,14 +32,11 @@ class MoviesFragment : BaseFragment() {
     ): View {
         moviesViewModel =
             ViewModelProviders.of(this, viewModelFactory).get(MoviesViewModel::class.java)
-
         binding = FragmentMoviesBinding.inflate(inflater, container, false)
         binding.viewModel = moviesViewModel
         binding.lifecycleOwner = viewLifecycleOwner
-
         initAdapter()
         setHasOptionsMenu(true)
-
         return binding.root
     }
 
@@ -53,17 +46,16 @@ class MoviesFragment : BaseFragment() {
 
     private fun initAdapter() {
         binding.rcvMovies.apply {
-            this@MoviesFragment.adapter = MovieAdapter(onMovieClickListener)
-            val gridLayoutManager = GridLayoutManager(
-                requireContext(), resources.getInteger(R.integer.number_of_grid_columns)
+            this@MoviesFragment.adapter = MovieAdapter(
+                onMovieClickListener
             )
             adapter = this@MoviesFragment.adapter
-            layoutManager = gridLayoutManager
+            addItemDecoration(MovieItemDecoration())
         }
         binding.rcvMovies.addOnScrollListener(scrollListener)
     }
 
-    // scroll to get Next Page of result
+    //scroll to get next page of result
     private val scrollListener: RecyclerView.OnScrollListener =
         object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -80,14 +72,22 @@ class MoviesFragment : BaseFragment() {
 
     override fun handleEvent() {
         super.handleEvent()
+        adapter.setClickLister(object : MovieAdapter.OnClickListener {
+            override fun clickItem(movie: Movie) {
+                val bundle = Bundle().apply {
+                    putParcelable(MovieDetailsFragment.MOVIE_EXTRA_KEY, movie)
+                }
+                navigator.startActivity(requireActivity(), MovieDetailsActivity::class.java, bundle)
+            }
+        })
 
         swipeRefreshLayout.setOnRefreshListener {
-            swipeRefreshLayout.isRefreshing = false
             fetchMoviesFromFirstPage()
+            swipeRefreshLayout.isRefreshing = false
         }
     }
 
-    private fun goToMovieDetailActivity(movie: Movie) {
+    private val onMovieClickListener: (movie: Movie) -> Unit = { movie ->
         val bundle = Bundle().apply {
             putParcelable(MovieDetailsFragment.MOVIE_EXTRA_KEY, movie)
         }
@@ -129,5 +129,17 @@ class MoviesFragment : BaseFragment() {
 
     override fun onBackPressedCallback() {
         requireActivity().finish()
+    }
+
+    class MovieItemDecoration(private val offset: Int = 3) : RecyclerView.ItemDecoration() {
+        override fun getItemOffsets(
+            outRect: Rect,
+            view: View,
+            parent: RecyclerView,
+            state: RecyclerView.State
+        ) {
+            super.getItemOffsets(outRect, view, parent, state)
+            outRect.set(offset, offset, offset, offset)
+        }
     }
 }

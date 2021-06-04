@@ -4,9 +4,12 @@
     <string name="release_date">Release Date</string>
     <string name="alphabetical">Alphabetical</string>
     <string name="rating">Rating</string>
-    <string name="book_movie">Book movie</string>
+    <string name="book_movie">Book</string>
     <string name="movie_user_rating">Rating: %1$.1f/10</string>
     <string name="movie_release_date">Release date: %s</string>
     <string name="liked">Liked</string>
     <string name="unlike">Like</string>
+    <string name="duration">Duration</string>
+    <string name="language">Language</string>
+    <string name="duration_time">%d m</string>
 </resources>

@@ -3,10 +3,10 @@ package com.madison.client.movies.di
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.madison.client.movies.BuildConfig
 import com.madison.client.movies.data.repository.remote.api.MoviesApi
 import com.madison.client.movies.data.repository.remote.api.middleware.AuthInterceptor
 import com.madison.client.movies.data.repository.remote.api.service.ServiceGenerator
-import com.madison.client.movies.BuildConfig
 import dagger.Module
 import dagger.Provides
 import okhttp3.logging.HttpLoggingInterceptor
@@ -30,7 +30,7 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideAuthApi(
+    fun provideMoviesApi(
             gson: Gson,
             authInterceptor: AuthInterceptor,
             loggingInterceptor: HttpLoggingInterceptor

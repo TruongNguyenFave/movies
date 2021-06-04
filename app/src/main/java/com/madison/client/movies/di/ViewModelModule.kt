@@ -2,7 +2,7 @@ package com.madison.client.movies.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.madison.client.movies.feature.details.moviedetails.MovieDetailViewModel
+import com.madison.client.movies.feature.details.moviedetails.MovieDetailsViewModel
 import com.madison.client.movies.feature.home.movies.MoviesViewModel
 import dagger.Binds
 import dagger.Module
@@ -20,6 +20,6 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(MovieDetailViewModel::class)
-    internal abstract fun bindMovieDetailViewModel(movieDetailViewModel: MovieDetailViewModel): ViewModel
+    @ViewModelKey(MovieDetailsViewModel::class)
+    internal abstract fun bindMovieDetailsViewModel(movieDetailsViewModel: MovieDetailsViewModel): ViewModel
 }

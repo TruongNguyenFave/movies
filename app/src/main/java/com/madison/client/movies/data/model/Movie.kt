@@ -47,5 +47,11 @@ data class Movie(
     @Expose val overview: String?,
 
     @SerializedName("release_date")
-    @Expose val releaseDate: String?
+    @Expose val releaseDate: String?,
+
+    @SerializedName("runtime")
+    @Expose val runtime: Int?,
+
+    @SerializedName("genres")
+    @Expose val genres: List<Genres>?
 ) : Parcelable

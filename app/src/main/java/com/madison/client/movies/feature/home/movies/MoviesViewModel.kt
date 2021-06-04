@@ -17,17 +17,17 @@ class MoviesViewModel @Inject constructor(private var moviesRepository: MoviesRe
     }
 
     val isLoading = MutableLiveData<Boolean>()
-    val pageNumber: LiveData<Int>
-        get() = _pageNumber
-
     var movies = MutableLiveData<List<Movie>>()
     var loadingError = MutableLiveData<RetrofitException>()
-    var currentMovies = mutableListOf<Movie>()
-    var sortBy: String = Category.RELEASE_DATE.category
 
-    private val _pageNumber = MutableLiveData<Int>()
     private var isQueryExhausted: Boolean = false
     private var isExecutingQuery: Boolean = false
+
+    var sortBy: String? = Category.RELEASE_DATE.category
+
+    private val _pageNumber = MutableLiveData<Int>()
+    val pageNumber: LiveData<Int>
+        get() = _pageNumber
 
     init {
         _pageNumber.value = 1
@@ -68,9 +68,7 @@ class MoviesViewModel @Inject constructor(private var moviesRepository: MoviesRe
             }.doFinally {
                 isLoading.value = false
             }.subscribe({
-                currentMovies.addAll(it.results ?: listOf())
-                movies.value = currentMovies
-
+                movies.value = it.results
                 isExecutingQuery = false
                 isQueryExhausted = it.results?.size ?: 0 < ITEM_NUMBER_PER_PAGE
             }, {
