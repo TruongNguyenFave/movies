@@ -1,6 +1,6 @@
 # Movies App Project
 
-## App architecture
+## App architecture - MVVM  (Model - View - ViewModel)
 
 ![App architecture](https://github.com/linnguyen/movies/blob/master/final-architecture_android.png)
 
